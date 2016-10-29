@@ -16,7 +16,8 @@ function release {
   lein release
 }
 
-function set_version(version) {
+function set_version {
+  local version=$1
   if version; then
     $(eval "lein set-version $version")
     $(eval "git add .")
