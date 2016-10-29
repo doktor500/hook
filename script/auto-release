@@ -2,7 +2,7 @@
 set -e
 
 EMAIL="releases@kenfos.co.uk"
-USER_NAME="CI environment"
+USER_NAME="CI"
 
 function release {
   if should_run_release; then
