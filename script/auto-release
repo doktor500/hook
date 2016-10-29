@@ -4,20 +4,22 @@ set -e
 EMAIL="releases@kenfos.co.uk"
 USER_NAME="CI"
 
-function release {
-  if should_run_release; then
-    setup
-    lein release
-    git push
-  fi
-}
-
 function setup {
-  git config user.email "$EMAIL"
-  git config user.name "$USER_NAME"
+  git config user.email $EMAIL
+  git config user.name $USER_NAME
 }
 
-function should_run_release {
+function release {
+  local commit_message=$(eval 'git log --oneline -1')
+  local version=$(eval "./script/commit-version '$commit_message'")
+  $(eval "lein release $version")
+}
+
+function push {
+  git push
+}
+
+function is_release {
   (is_master_branch) && !(is_release_commit)
 }
 
@@ -29,4 +31,8 @@ function is_release_commit {
   git log --oneline -1 | grep "lein-release plugin"
 }
 
-release
+if is_release; then
+  setup
+  release
+  push
+fi
