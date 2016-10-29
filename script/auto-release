@@ -21,7 +21,7 @@ function set_version {
 function release {
   local commit_message=$(eval 'git log --oneline -1')
   local version=$(eval "./script/commit-version '$commit_message'")
-  set_version(version)
+  set_version version
   lein release
 }
 
