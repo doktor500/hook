@@ -7,8 +7,7 @@ USER_NAME="CI"
 function release {
   if should_run_release; then
     setup
-    lein release
-    git push
+    lein release && git push
   fi
 }
 
