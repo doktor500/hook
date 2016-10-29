@@ -6,8 +6,6 @@ You will need [Leiningen][1] 2.6.1 or above installed.
 
 [1]: https://github.com/technomancy/leiningen
 
-## Running
+## A new version can be released based on the commit message
 
-To start a web server for the application, run:
-
-    lein run
+"Updare readme v1.0.0"
