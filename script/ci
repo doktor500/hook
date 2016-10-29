@@ -2,11 +2,3 @@
 set -e
 
 lein with-profile test test
-
-if [ "$BRANCH_NAME" == "master" ]; then
-  git config user.email "releases@kenfos.co.uk"
-  git config user.name "CI environment"
-
-  lein release
-  git push
-fi
