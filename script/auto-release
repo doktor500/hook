@@ -5,8 +5,8 @@ EMAIL="releases@kenfos.co.uk"
 USER_NAME="CI"
 
 function setup {
-  git config user.email $EMAIL
-  git config user.name $USER_NAME
+  git config user.email "$EMAIL"
+  git config user.name "$USER_NAME"
 }
 
 function push {
@@ -26,6 +26,7 @@ function set_version {
 function release {
   set_version
   lein release
+  push
 }
 
 function is_master_branch {
@@ -43,5 +44,4 @@ function is_release {
 if is_release; then
   setup
   release
-  push
 fi
