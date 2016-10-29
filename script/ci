@@ -2,3 +2,8 @@
 set -e
 
 lein with-profile test test
+
+if [ "$BRANCH_NAME" == "master" ]; then
+  lein release
+  git push
+fi
