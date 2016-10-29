@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-lein with-profile test test
-
 EMAIL="releases@kenfos.co.uk"
 USER_NAME="CI environment"
 
