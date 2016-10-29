@@ -13,8 +13,8 @@ function release {
 }
 
 function setup {
-  git config user.email EMAIL
-  git config user.name USER_NAME
+  git config user.email "$EMAIL"
+  git config user.name "$USER_NAME"
 }
 
 function should_run_release {
