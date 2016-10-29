@@ -41,6 +41,7 @@
             [lein-cprop "1.0.1"]
             [lein-immutant "2.1.0"]
             [lein-midje "3.2"]
+            [lein-set-version "0.4.1"]
             [rplevy/lein-deploy-app "0.2.1"]]
 
   :lein-release {:deploy-via :shell
