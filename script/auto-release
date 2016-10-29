@@ -5,7 +5,7 @@ EMAIL="releases@kenfos.co.uk"
 USER_NAME="CI environment"
 
 function is_master_branch {
-  ("$BRANCH_NAME" == "master")
+  ["$BRANCH_NAME" == "master"]
 }
 
 function is_release_commit {
