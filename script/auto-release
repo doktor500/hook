@@ -9,13 +9,6 @@ function setup {
   git config user.name $USER_NAME
 }
 
-function release {
-  local commit_message=$(eval 'git log --oneline -1')
-  local version=$(eval "./script/commit-version '$commit_message'")
-  set_version(version)
-  lein release
-}
-
 function set_version {
   local version=$1
   if version; then
@@ -25,12 +18,15 @@ function set_version {
   fi
 }
 
-function push {
-  git push
+function release {
+  local commit_message=$(eval 'git log --oneline -1')
+  local version=$(eval "./script/commit-version '$commit_message'")
+  set_version(version)
+  lein release
 }
 
-function is_release {
-  (is_master_branch) && !(is_release_commit)
+function push {
+  git push
 }
 
 function is_master_branch {
@@ -39,6 +35,10 @@ function is_master_branch {
 
 function is_release_commit {
   git log --oneline -1 | grep "lein-release plugin"
+}
+
+function is_release {
+  (is_master_branch) && !(is_release_commit)
 }
 
 if is_release; then
