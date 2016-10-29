@@ -2,3 +2,7 @@
 set -e
 
 lein with-profile test test
+
+if [ "$BRANCH_NAME" == "master" ]; then
+  git log
+fi
