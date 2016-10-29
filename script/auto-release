@@ -13,8 +13,7 @@ function set_version {
   local version=$1
   if version; then
     $(eval "lein set-version $version")
-    $(eval "git add .")
-    $(eval "git commit -m 'auto lein-release plugin: preparing $version release'")
+    $(eval "git commit -am 'auto lein-release plugin: preparing $version release'")
     $(eval "git push")
   fi
 }
