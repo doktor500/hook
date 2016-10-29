@@ -12,7 +12,8 @@ function setup {
 function release {
   local commit_message=$(eval 'git log --oneline -1')
   local version=$(eval "./script/commit-version '$commit_message'")
-  $(eval "lein release $version")
+  $(eval "lein set-version $version")
+  lein release
 }
 
 function push {
