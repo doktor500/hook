@@ -5,15 +5,15 @@ EMAIL="releases@kenfos.co.uk"
 USER_NAME="CI"
 
 function setup {
-  $(eval "git config user.email $EMAIL")
-  $(eval "git config user.name $USER_NAME")
+  git config user.email $EMAIL
+  git config user.name $USER_NAME
 }
 
 function set_version {
   local version=$1
   lein set-version $version
   git add project.clj
-  git commit -m "'auto lein-release plugin: preparing $version release'"
+  git commit -m "'auto release preparing $version release'"
 }
 
 function release {
@@ -24,7 +24,7 @@ function release {
   else
     set_version $version
   fi
-  $(eval "git push")
+  git push
 }
 
 function is_master_branch {
