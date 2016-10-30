@@ -11,6 +11,8 @@ function setup {
 
 function set_version {
   local version=$1
+  echo "version"
+  echo "$version"
   $(eval "lein set-version $version")
   $(eval "git commit -am 'auto lein-release plugin: preparing $version release'")
 }
