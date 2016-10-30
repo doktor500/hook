@@ -17,14 +17,12 @@ function set_version {
 }
 
 function get_commit_message {
-  local message=$(eval 'git log --oneline -1')
-  echo "$message"
+  local commit_message=$(eval 'git log -1 --pretty=%B')
+  echo "$commit_message"
 }
 
 function is_version_specified {
   local commit_message=$(get_commit_message)
-  echo "commit message"
-  echo "$commit_message"
   local version=$(eval "./script/commit-version '$commit_message'")
   ![ -z "$version" ]
 }
@@ -39,7 +37,8 @@ function is_master_branch {
 }
 
 function is_release_commit {
-  git log --oneline -1 | grep "lein-release plugin"
+  local commit_message=$(get_commit_message)
+  $commit_message | grep "lein-release plugin"
 }
 
 function is_release {
