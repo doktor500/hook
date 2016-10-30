@@ -8,4 +8,4 @@ You will need [Leiningen][1] 2.6.1 or above installed.
 
 ## To release a new version based on the commit message use the format vX.X.X
 
-    git commit -am "Update readme.md v1.0.0"
+    git commit -am "Update readme v1.0.0"
