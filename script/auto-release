@@ -32,8 +32,7 @@ function is_master_branch {
 }
 
 function is_release_commit {
-  local commit_message=$(eval 'git log -1 --pretty=%B')
-  $commit_message | grep "lein-release plugin"
+  git log -1 --pretty=%B | grep "lein-release plugin"
 }
 
 function is_release {
