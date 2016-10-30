@@ -9,12 +9,16 @@ function setup {
   git config user.name $USER_NAME
 }
 
+function is_merge_commit {
+  git log --oneline -1 | grep "Merge pull request"
+}
+
 function get_version_from_commit_message {
   local commit_message=""
   if is_merge_commit; then
-    commit_message=$(eval 'git log --oneline -1')
-  else
     commit_message=$(eval 'git log --oneline -2')
+  else
+    commit_message=$(eval 'git log --oneline -1')
   fi
   echo "commit_message"
   echo "$commit_message"
@@ -31,10 +35,6 @@ function set_version {
   lein set-version $snapshot_version
   git add project.clj
   git commit -m "'auto release bumped version to $snapshot_version'"
-}
-
-function is_merge_commit {
-  git log --oneline -1 | grep "Merge pull request"
 }
 
 function is_version_specified {
