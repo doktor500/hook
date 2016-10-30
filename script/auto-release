@@ -16,8 +16,17 @@ function set_version {
   git commit -m "'auto release bumped version to $version'"
 }
 
+function is_merge_commit {
+  git log --oneline -1 | grep "Merge pull request"
+}
+
 function is_version_specified {
-  local commit_message=$(eval 'git log -1 --pretty=%B')
+  local commit_message=""
+  if is_merge_commit; then
+    commit_message=$(eval 'git log --oneline -1')
+  else
+    commit_message=$(eval 'git log --oneline -2')
+  fi
   local version=$(eval "./script/commit-version '$commit_message'")
   ![ -z "$version" ]
 }
@@ -32,7 +41,7 @@ function is_master_branch {
 }
 
 function is_release_commit {
-  git log -1 --pretty=%B | grep "lein-release plugin"
+  git log --oneline -1 | grep "lein-release plugin"
 }
 
 function is_release {
