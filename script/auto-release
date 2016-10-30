@@ -16,7 +16,7 @@ function is_merge_commit {
 function get_version_from_commit_message {
   local commit_message=""
   if is_merge_commit; then
-    commit_message=`git log --oneline -2 | tail -1)`
+    commit_message=`git log --oneline -2 | tail -1`
   else
     commit_message=`git log --oneline -1`
   fi
