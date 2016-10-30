@@ -11,10 +11,9 @@ function setup {
 
 function set_version {
   local version=$1
-  git branch
-  $(eval "lein set-version $version")
-  $(eval "git add .")
-  $(eval "git commit -m 'auto lein-release plugin: preparing $version release'")
+  lein set-version $version
+  git add project.clj
+  git commit -m "'auto lein-release plugin: preparing $version release'"
 }
 
 function release {
