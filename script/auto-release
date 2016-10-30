@@ -14,6 +14,7 @@ function set_version {
   echo "version"
   echo $version
   $(eval "lein set-version $version")
+  $(eval "git add .")
   $(eval "git commit -m 'auto lein-release plugin: preparing $version release'")
 }
 
