@@ -20,9 +20,12 @@ function set_version {
 function release {
   local commit_message=$(eval 'git log --oneline -1')
   local version=$(eval "./script/commit-version '$commit_message'")
+  echo "release"
+  echo $version
   if [ -z "$version" ]; then
     set_version $version
   else
+    echo "lein release"
     lein release
   fi
   git push
