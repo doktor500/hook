@@ -32,7 +32,7 @@ function is_version_specified {
   local version=$(eval "./script/commit-version '$commit_message'")
   echo "version"
   echo "$version"
-  [ ! "$version" ]
+  [ "$version" ]
 }
 
 function release {
