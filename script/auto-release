@@ -20,15 +20,12 @@ function get_version_from_commit_message {
   else
     commit_message=`git log --oneline -1`
   fi
-  local commit_version=$(eval "./script/commit-version '$commit_message'")
-  `$1=$commit_version`
+  $1=$(eval "./script/commit-version '$commit_message'")
 }
 
 function set_version {
   local version=$1
   local snapshot_version="$version-SNAPSHOT"
-  # echo "snapshot_version"
-  # echo "$snapshot_version"
   lein set-version $snapshot_version
   git add project.clj
   git commit -m "'auto release bumped version to $snapshot_version'"
@@ -42,8 +39,6 @@ function is_version_specified {
 function release {
   local version
   get_version_from_commit_message version
-  # echo "release version"
-  # echo "$version"
   if is_version_specified "$version"; then set_version "$version"; fi
   lein release
 }
