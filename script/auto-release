@@ -21,7 +21,7 @@ function get_version_from_commit_message {
     commit_message=`git log --oneline -1`
   fi
   echo "commit_message"
-  echo "$commit_message"
+  echo `$commit_message | tail -1`
   local version=$(eval "./script/commit-version '$commit_message'")
   echo "$version"
 }
