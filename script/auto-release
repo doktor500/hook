@@ -37,7 +37,7 @@ function is_merge_commit {
 
 function is_version_specified {
   local version=$(get_version_from_commit_message)
-  ![ "$version" == "" ]
+  [ ! -z "$version" ]
 }
 
 function release {
