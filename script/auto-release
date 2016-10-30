@@ -19,10 +19,10 @@ function set_version {
 function release {
   local commit_message=$(eval 'git log --oneline -1')
   local version=$(eval "./script/commit-version '$commit_message'")
-  if [ -z "$version" ]
-  then lein release
-  else set_version "$version-SNAPSHOT"
+  if ![ -z "$version" ]; then
+    set_version "$version-SNAPSHOT"
   fi
+  lein release
 }
 
 function is_master_branch {
