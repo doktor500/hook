@@ -23,7 +23,6 @@ function get_version_from_commit_message {
   local version=$(eval "./script/commit-version '$commit_message'")
   echo "chonflos"
   echo "$version"
-  echo "kenfos"
 }
 
 function set_version {
