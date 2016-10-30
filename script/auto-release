@@ -24,7 +24,7 @@ function release {
   else
     set_version $version
   fi
-  git push
+  $(eval "git push")
 }
 
 function is_master_branch {
