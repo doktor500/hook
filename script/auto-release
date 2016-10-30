@@ -28,7 +28,7 @@ function get_version_from_commit_message {
 }
 
 function set_version {
-  local version=$(get_version_from_commit_message)
+  local version=$1
   local snapshot_version="$version-SNAPSHOT"
   echo "snapshot_version"
   echo "$snapshot_version"
@@ -38,12 +38,13 @@ function set_version {
 }
 
 function is_version_specified {
-  local version=$(get_version_from_commit_message)
+  local version=$1
   [ ! -z "$version" ]
 }
 
 function release {
-  if is_version_specified; then set_version; fi
+  local version=$(get_version_from_commit_message)
+  if is_version_specified(version); then set_version(version); fi
   lein release
 }
 
