@@ -13,12 +13,16 @@ function is_merge_commit {
   git log --oneline -1 | grep "Merge pull request"
 }
 
-function get_version_from_commit_message {
-  local commit_message=""
+function get_commit_message {
   if is_merge_commit
-  then commit_message=`git log -1 --pretty=%B | tail -1`
-  else commit_message=`git log --oneline -1`
+  then eval "$1=$(git log -1 --pretty=%B | tail -1)"
+  else eval "$1=$(git log --oneline -1)"
   fi
+}
+
+function get_version_from_commit_message {
+  commit_message=""
+  get_commit_message commit_message
   local commit_version=`./script/commit-version $commit_message`
   eval "$1=$commit_version"
 }
