@@ -44,7 +44,7 @@ function is_version_specified {
 
 function release {
   local version=$(get_version_from_commit_message)
-  if is_version_specified($version); then set_version($version); fi
+  if is_version_specified "$version"; then set_version "$version"; fi
   lein release
 }
 
