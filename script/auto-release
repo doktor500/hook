@@ -11,8 +11,6 @@ function setup {
 
 function set_version {
   local version=$1
-  echo "version"
-  echo "$version"
   $(eval "lein set-version $version")
   $(eval "git commit -am 'auto lein-release plugin: preparing $version release'")
 }
@@ -21,8 +19,10 @@ function release {
   local commit_message=$(eval 'git log --oneline -1')
   local version=$(eval "./script/commit-version '$commit_message'")
   if [ -z "$version" ]; then
+    echo "lein release"
     lein release
   else
+    echo "set version"
     set_version $version
   fi
   git push
