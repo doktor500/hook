@@ -16,20 +16,21 @@ function is_merge_commit {
 function get_version_from_commit_message {
   local commit_message=""
   if is_merge_commit; then
-    commit_message=`git log --oneline -2`
+    commit_message=`git log --oneline -2 | tail -1`
   else
     commit_message=`git log --oneline -1`
   fi
+  echo "commit_message"
+  echo "$commit_message"
   local version=$(eval "./script/commit-version '$commit_message'")
-  echo "chonflos"
   echo "$version"
 }
 
 function set_version {
   local version=$1
   local snapshot_version="$version-SNAPSHOT"
-  echo "snapshot_version"
-  echo "$snapshot_version"
+  # echo "snapshot_version"
+  # echo "$snapshot_version"
   lein set-version $snapshot_version
   git add project.clj
   git commit -m "'auto release bumped version to $snapshot_version'"
@@ -42,8 +43,8 @@ function is_version_specified {
 
 function release {
   local version=$(get_version_from_commit_message)
-  echo "release version"
-  echo "$version"
+  # echo "release version"
+  # echo "$version"
   if is_version_specified "$version"; then set_version "$version"; fi
   lein release
 }
