@@ -27,7 +27,7 @@ function get_version_from_commit_message {
 function set_version {
   local snapshot_version="$1-SNAPSHOT"
   lein set-version $snapshot_version
-  git add .
+  git add project.clj
   git commit -m "'auto release bumped version to $snapshot_version'"
 }
 
