@@ -16,13 +16,8 @@ function set_version {
   git commit -m "'auto release bumped version to $version'"
 }
 
-function get_commit_message {
-  local commit_message=$(eval 'git log -1 --pretty=%B')
-  echo "$commit_message"
-}
-
 function is_version_specified {
-  local commit_message=$(get_commit_message)
+  local commit_message=$(eval 'git log -1 --pretty=%B')
   local version=$(eval "./script/commit-version '$commit_message'")
   ![ -z "$version" ]
 }
@@ -37,7 +32,7 @@ function is_master_branch {
 }
 
 function is_release_commit {
-  local commit_message=$(get_commit_message)
+  local commit_message=$(eval 'git log -1 --pretty=%B')
   $commit_message | grep "lein-release plugin"
 }
 
