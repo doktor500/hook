@@ -15,8 +15,8 @@ function is_merge_commit {
 
 function get_commit_message {
   if is_merge_commit
-  then eval "$1=$(git log --oneline -2 | tail -1)"
-  else eval "$1=$(git log --oneline -1)"
+  then `$1=(git log --oneline -2 | tail -1)`
+  else `$1=(git log --oneline -1)`
   fi
 }
 
