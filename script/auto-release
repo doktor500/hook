@@ -13,18 +13,16 @@ function set_version {
   local version=$1
   lein set-version $version
   git add project.clj
-  git commit -m "'auto release version $version'"
+  git commit -m "'auto release bumpep version to $version'"
 }
 
 function release {
   local commit_message=$(eval 'git log --oneline -1')
   local version=$(eval "./script/commit-version '$commit_message'")
-  if [ -z "$version" ]; then
-    lein release
-  else
-    set_version "$version-SNAPSHOT"
+  if [ -z "$version" ]
+  then lein release
+  else set_version "$version-SNAPSHOT"
   fi
-  git push
 }
 
 function is_master_branch {
@@ -42,4 +40,5 @@ function is_release {
 if is_release; then
   setup
   release
+  git push
 fi
