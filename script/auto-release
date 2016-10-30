@@ -13,6 +13,7 @@ function set_version {
   local version=$1
   $(eval "lein set-version $version")
   $(eval "git add .")
+  echo "git commit -m 'auto lein-release plugin: preparing $version release'"
   $(eval "git commit -m 'auto lein-release plugin: preparing $version release'")
 }
 
@@ -24,7 +25,7 @@ function release {
   else
     set_version $version
   fi
-  git push
+  $(eval "git push")
 }
 
 function is_master_branch {
