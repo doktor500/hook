@@ -1,4 +1,4 @@
-(defproject hook "0.9.19-SNAPSHOT"
+(defproject hook "0.9.19"
 
   :description "Hook service"
   :url "https://github.com/doktor500/hook"
