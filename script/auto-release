@@ -15,10 +15,9 @@ function is_merge_commit {
 
 function get_version_from_commit_message {
   local commit_message=""
-  if is_merge_commit; then
-    commit_message=`git log -1 --pretty=%B | tail -1`
-  else
-    commit_message=`git log --oneline -1`
+  if is_merge_commit
+  then commit_message=`git log -1 --pretty=%B | tail -1`
+  else commit_message=`git log --oneline -1`
   fi
   local commit_version=`./script/commit-version $commit_message`
   eval "$1=$commit_version"
