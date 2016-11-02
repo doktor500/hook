@@ -1,0 +1,64 @@
+#!/bin/bash
+set -e
+
+EMAIL="releases@kenfos.co.uk"
+USER_NAME="CI"
+
+function setup {
+  git config user.email $EMAIL
+  git config user.name $USER_NAME
+}
+
+function is_merge_commit {
+  git log --oneline -1 | grep "Merge pull request"
+}
+
+function get_commit_message {
+  if is_merge_commit
+  then eval "$1='$(git log -1 --pretty=%B | tail -1)'"
+  else eval "$1='$(git log --oneline -1)'"
+  fi
+}
+
+function get_version_from_commit_message {
+  commit_message=""
+  get_commit_message commit_message
+  local commit_version=`./script/commit-version $commit_message`
+  eval "$1=$commit_version"
+}
+
+function set_version {
+  local snapshot_version="$1-SNAPSHOT"
+  lein set-version $snapshot_version
+  git add project.clj
+  git commit -m "auto release bumped version to $snapshot_version"
+}
+
+function is_version_specified {
+  [ ! -z "$1" ]
+}
+
+function release {
+  version=""
+  get_version_from_commit_message version
+  if is_version_specified $version; then set_version $version; fi
+  lein release
+}
+
+function is_master_branch {
+  [ "$BRANCH_NAME" == "master" ]
+}
+
+function is_release_commit {
+  git log --oneline -1 | grep "lein-release plugin"
+}
+
+function is_release {
+  (is_master_branch) && !(is_release_commit)
+}
+
+if is_release; then
+  setup
+  release
+  git push
+fi
