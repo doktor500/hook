@@ -5,6 +5,6 @@ lein with-profile test test
 
 REVISION=$(grep defproject project.clj | rev | cut -d' ' -f1 | rev | sed 's/"//g')
 
-if [ "$BRANCH_NAME" == "master" && "$REVISION" != *"SNAPSHOT"* ]; then
+if [ "$BRANCH_NAME" == "master" ] && [ "$REVISION" != *"SNAPSHOT"* ]; then
   echo "Deploy"
 fi
