@@ -1,30 +1,29 @@
 #!/bin/bash
 set -e
 
-EMAIL="releases@kenfos.co.uk"
-USER_NAME="CI"
-
-function setup {
-  git config user.email $EMAIL
-  git config user.name $USER_NAME
-}
+export GIT_AUTHOR_EMAIL="noreply@shutl.com"
+export GIT_AUTHOR_NAME="semaphoreci"
 
 function is_merge_commit {
   git log --oneline -1 | grep "Merge pull request"
 }
 
+function setup {
+  git config user.email $GIT_AUTHOR_EMAIL
+  git config user.name $GIT_AUTHOR_NAME
+}
+
 function get_commit_message {
   if is_merge_commit
-  then eval "$1='$(git log -1 --pretty=%B | tail -1)'"
-  else eval "$1='$(git log --oneline -1)'"
+  then
+    git log -1 --pretty=%B | tail -1
+  else
+    git log --oneline -1
   fi
 }
 
 function get_version_from_commit_message {
-  commit_message=""
-  get_commit_message commit_message
-  local commit_version=`./script/commit-version $commit_message`
-  eval "$1=$commit_version"
+  ./scripts/commit-version "$(get_commit_message)"
 }
 
 function set_version {
@@ -39,8 +38,7 @@ function is_version_specified {
 }
 
 function release {
-  version=""
-  get_version_from_commit_message version
+  local version=$(get_version_from_commit_message)
   if is_version_specified $version; then set_version $version; fi
   lein release
 }
